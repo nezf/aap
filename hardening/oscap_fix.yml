@@ -1,0 +1,13 @@
+---
+- name: Run OpenSCAP Scan Custom Rules
+  hosts: all
+  become: true
+  tasks:
+    - name: Run OVAL/XCCDF evaluation
+      ansible.builtin.command:
+        cmd: >
+          oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_cis
+          --report /var/log/compliance-report.html
+          /usr/share/xml/scap/ssg/content/ssg-rhel7-ds.xml
+      register: oscap_scan
+      ignore_errors: true
