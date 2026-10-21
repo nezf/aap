@@ -17,7 +17,7 @@
 
     - name: Copy or create the file inside the repo path
       ansible.builtin.copy:
-        remote_src: "/var/log/compliance-remediations.yml"
+        src: "/var/log/compliance-remediations.yml"
         dest: "{{ repo_path }}/hardening/oscap_fix.yml"
         mode: '0644'
 
