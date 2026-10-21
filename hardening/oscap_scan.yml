@@ -13,7 +13,8 @@
     - name: Run OVAL/XCCDF evaluation | HTML & XML Report
       ansible.builtin.command:
         cmd: >
-          oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_cis 
+          oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_cis
+          --rule xccdf_org.ssgproject.content_rule_package_aide_installed
           --report /var/log/compliance-report.html 
           --results /var/log/compliance-results.xml 
           /usr/share/xml/scap/ssg/content/ssg-rhel7-ds.xml
