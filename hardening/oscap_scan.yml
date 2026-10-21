@@ -10,11 +10,21 @@
           - scap-security-guide
         state: present
 
-    - name: Run OVAL/XCCDF evaluation
+    - name: Run OVAL/XCCDF evaluation | HTML & XML Report
       ansible.builtin.command:
         cmd: >
-          oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_cis
-          --report /var/log/compliance-report.html
+          oscap xccdf eval --profile xccdf_org.ssgproject.content_profile_cis 
+          --report /var/log/compliance-report.html 
+          --results /var/log/compliance-results.xml 
           /usr/share/xml/scap/ssg/content/ssg-rhel7-ds.xml
       register: oscap_scan
+      ignore_errors: true
+
+    - name: Run OVAL/XCCDF FIX for Ansible
+      ansible.builtin.command:
+        cmd: >
+          oscap xccdf generate fix --fix-type ansible --profile xccdf_org.ssgproject.content_profile_cis 
+          --output /var/log/compliance-remediations.yml 
+          /var/log/compliance-results.xml
+      register: oscap_ansible_report
       ignore_errors: true
