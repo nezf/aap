@@ -1,0 +1,32 @@
+---
+- name: Upload a file to Git repository
+  hosts: all
+  gather_facts: false
+  vars:
+    repo_url: "git@github.com:nezf/aap.git" # Use SSH or HTTPS with token
+    repo_path: "/tmp/aap"
+    branch_name: "main"
+
+  tasks:
+    - name: Clone the Git repository
+      ansible.builtin.git:
+        repo: "{{ repo_url }}"
+        dest: "{{ repo_path }}"
+        version: "{{ branch_name }}"
+        accept_newhostkey: true
+
+    - name: Copy or create the file inside the repo path
+      ansible.builtin.copy:
+        src: "/var/log/compliance-report.yml"
+        dest: "{{ repo_path }}/hardening/compliance-report-fix.yml"
+        mode: '0644'
+
+    - name: Stage, commit, and push changes to Git
+      ansible.builtin.shell: |
+        git add .
+        git diff-index --quiet HEAD || git commit -m "Automated file upload via Ansible"
+        git push origin {{ branch_name }}
+      args:
+        chdir: "{{ repo_path }}"
+      register: git_result
+      changed_when: "'Automated file upload' in git_result.stdout or git_result.rc == 0"
