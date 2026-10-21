@@ -17,7 +17,7 @@
 
     - name: Copy or create the file inside the repo path
       ansible.builtin.copy:
-        src: "/var/log/compliance-report.yml"
+        src: "/var/log/compliance-remediations.yml"
         dest: "{{ repo_path }}/hardening/compliance-report-fix.yml"
         mode: '0644'
 
