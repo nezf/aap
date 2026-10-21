@@ -20,6 +20,7 @@
         src: "/var/log/compliance-remediations.yml"
         dest: "{{ repo_path }}/hardening/oscap_fix.yml"
         mode: '0644'
+        remote_src: true
 
     - name: Stage, commit, and push changes to Git
       ansible.builtin.shell: |
