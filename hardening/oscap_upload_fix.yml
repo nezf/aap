@@ -18,7 +18,7 @@
     - name: Copy or create the file inside the repo path
       ansible.builtin.copy:
         src: "/var/log/compliance-remediations.yml"
-        dest: "{{ repo_path }}/hardening/compliance-report-fix.yml"
+        dest: "{{ repo_path }}/hardening/oscap_fix.yml"
         mode: '0644'
 
     - name: Stage, commit, and push changes to Git
