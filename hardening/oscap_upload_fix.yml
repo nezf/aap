@@ -13,7 +13,7 @@
         repo: "{{ repo_url }}"
         dest: "{{ repo_path }}"
         version: "{{ branch_name }}"
-        accept_newhostkey: true
+        #accept_newhostkey: true
 
     - name: Copy or create the file inside the repo path
       ansible.builtin.copy:
